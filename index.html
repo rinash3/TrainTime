@@ -7,106 +7,86 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href=assets/css/style.css>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
     <title>TrainTime</title>
 </head>
 
 <body>
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-sm">
-                <div class="jumbotron">
-                    <h1>Train Time</h1>
 
-                </div>
-            </div>
+    <div class="container-fluid">
+        <div class="jumbotron jumbotron-fluid text-center">
+            <h1 class="display-4">Anytime is Train Time</h1>
+
         </div>
-        <div class="row">
-            <div class="col-sm">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="row">Current Train Schedule</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                        </tr>
-                        <tr>
-                            <th scope="col">Train Name</th>
-                            <th scope="col">Destination</th>
-                            <th scope="col">Frequency (min)</th>
-                            <th scope="col">Next Arrival</th>
-                            <th scope="col">Minutes Away</th>
+    </div>
+    <div class="row">
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">New Rochelle</th>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+        <div class="col-md-12">
 
-                        </tr>
-                        <tr>
-                            <th scope="row"></th>
-                        </tr>
-                        <tr>
-                            <th scope="row"></th>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <!-- Current schedual-->
+            <div class="card mb-4">
+                <div class="card-header">Current Train Schedual</div>
+                <div class="card-body">
+                    <table class="table table-sm table-hover" id='train-table'>
+                        <thead>
+                            <tr>
+                                <th scope="col">Train Name</th>
+                                <th scope="col">Destination</th>
+                                <th scope="col">Frequency (min)</th>
+                                <th scope="col">Next Arrival</th>
+                                <th scope="col">Minutes Away</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
+
+
     <div class="form-container ">
         <div class="row">
-            <div class="col-sm">
-                <div class="jumbotron">
-                    <h4 class="display-4">Add Train</h4>
+            <div class="col-md-12">
 
-                    <form>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Train Name</label>
-                            <input type="text" class="form-control" id="employeeName" placeholder="Harlem Line">
+                <div class="card mb-4">
+                    <div class="card-header">Add Train</div>
+                    <div class="card-body">
 
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Destination</label>
-                            <input type="text" class="form-control" id="role" placeholder="Scarsdale">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">First Train Time</label>
-                            <input type="text" class="form-control" id="startDate" placeholder="02:00">
-
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Frequency (min)</label>
-                            <input type="text" class="form-control" id="monthlyRate" placeholder="10 min">
-
-                        </div>
-
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-
-
-
+                        <!-- Entry Form -->
+                        <form>
+                            <div class="form-group">
+                                <label for="train-name-input">Train Name</label>
+                                <input class="form-control" id="train-name-input" placeholder="New Rochelle" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="dest-input">Destination</label>
+                                <input class="form-control" id="dest-input" placeholder="White Plaines" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="first-train-input">First Train Time (HH:mm)</label>
+                                <input class="form-control" id="first-train-input" placeholder="13:00" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label for="freq-input">Frequency (min)</label>
+                                <input class="form-control" id="freq-input" placeholder="2 min" type="text">
+                            </div>
+                            <button class="btn btn-primary float-right" id="add-train-btn">Submit</button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
-
-
-
-
         </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
-
-        <script src="assets/javascript/trainTime.js" type="text/javascript"></script>
+    <script src="assets/javascript/trainTime.js" type="text/javascript"></script>
 
 </body>
 

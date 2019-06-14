@@ -10,3 +10,8 @@
 .col-sm {
     margin-bottom: 20px;
 }
+
+.card-header {
+    background-color: blue;
+    color: white;
+}
