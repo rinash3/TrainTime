@@ -20,14 +20,15 @@ $("#add-train-btn").on("click", function(event) {
     // Grabs train input
     var trainName = $("#train-name-input").val().trim();
     var trainDest = $("#dest-input").val().trim();
-    var trainFirst = moment($("#first-train-input").val().trim(), "hh:mm").format("X");
+    var firstTrain = $("#first-train-input").val().trim();
+    console.log(firstTrain);
     var trainFreq = $("#freq-input").val().trim();
 
     // Creates local "temporary" object for holding train data
     var newTrain = {
         name: trainName,
         destination: trainDest,
-        first: trainFirst,
+        first: firstTrain,
         frequency: trainFreq
     };
     //Update train info into the DB
@@ -54,24 +55,24 @@ database.ref().on("child_added", function(childSnapshot) {
 
     var trainName = childSnapshot.val().name;
     var trainDest = childSnapshot.val().destination;
-    var trainFirst = childSnapshot.val().first;
+    var firstTrain = childSnapshot.val().first;
     var trainFreq = childSnapshot.val().frequency;
 
     console.log(trainName);
     console.log(trainDest);
-    console.log(trainFirst);
+    console.log(firstTrain);
     console.log(trainFreq);
 
     //first available train time
-    var firstTrain = moment(trainFreq, "HH:mm").subtract(1, "years");
-    console.log(firstTrain);
+    var firstTrainNew = moment(firstTrain, "HH:mm").subtract(1, "years");
+    console.log(firstTrainNew);
 
     // current time
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+    console.log("CURRENT TIME: " + moment(currentTime).format("HH:mm"));
 
     // Difference between current time and first/next train time
-    var diffTime = moment().diff(moment(firstTrain), "minutes");
+    var diffTime = moment().diff(moment(firstTrainNew), "minutes");
     console.log("DIFFERENCE IN TIME: " + diffTime);
 
     // Time apart (remainder) - calculating time passed from the first/next train
@@ -82,7 +83,7 @@ database.ref().on("child_added", function(childSnapshot) {
     var minutsAway = trainFreq - timeLeft;
     console.log("MINUTES TILL TRAIN: " + minutsAway);
     //calculating the arrival time of the next train (adding the current time to min away)
-    var nextArrival = moment().add(minutsAway, "minutes").format("hh:mm");
+    var nextArrival = moment().add(minutsAway, "minutes").format("HH:mm");
     console.log("ARRIVAL TIME: " + nextArrival);
 
     // Create the new row in the table
